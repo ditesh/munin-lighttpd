@@ -1,0 +1,39 @@
+#!/bin/sh
+# Display lighttpd 
+
+if [ "z${1}" = "zconfig" ]; then
+
+        echo "graph_title Lighttpd accesses"
+        echo "graph_args --base 1000"
+        echo "graph_vlabel accesses / \${graph_period}"
+        echo "graph_category lighttpd"
+
+	echo "accesses.type DERIVE"
+	echo "accesses.min 0\n"
+	exit 0
+
+fi
+
+if [ "z${url}" = "z" ]; then
+	url="http://127.0.0.1/server-status?auto"
+fi
+
+OUTPUT=`wget -qO - ${url} | cat`
+
+if [ "z${OUTPUT}" = "z" ]; then
+
+	echo "No valid response from server (${url})"
+	exit 1
+
+fi
+
+set -- $OUTPUT
+
+if [ "z${3}" = "z" ]; then
+
+	echo "No valid response from server (${url})"
+	exit 1
+
+fi
+
+echo "accesses.value ${3}"
