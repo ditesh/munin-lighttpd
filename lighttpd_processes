@@ -7,7 +7,6 @@ if [ "z${1}" = "zconfig" ]; then
         echo "graph_args --base 1000 -l 0"
         echo "graph_category lighttpd"
         echo "graph_vlabel processes"
-        echo "graph_total total"
 
 	echo "busy.label busy_servers"
 	echo "busy.draw AREA"
